@@ -9,9 +9,4 @@ Why "*Guichet*" ? [Because](https://www.legifrance.gouv.fr/affichTexte.do;jsessi
 
 ## TODO
 
-- [ ] Choose directory structure
-- [ ] Choose first tools to use *(Sass, Gulp/Grunt?, NPM/Bower?, Bowerify?)*
-- [ ] Choose what to include *(Bootstrap, etc.)*
-- [ ] A shell script to quickly clone and configure kit
-- [ ] Add more todos
-- [ ] *Nespresso ?*
+Moved in issue [#1](/KitaeAgency/guichet/edit/master/README.md).
