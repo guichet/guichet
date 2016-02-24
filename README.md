@@ -9,4 +9,4 @@ Why "*Guichet*" ? [Because](https://www.legifrance.gouv.fr/affichTexte.do;jsessi
 
 ## TODO
 
-Moved in issue [#1](/KitaeAgency/guichet/edit/master/README.md).
+Moved to issue [#1](https://github.com/KitaeAgency/guichet/issues/1).
