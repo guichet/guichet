@@ -19,8 +19,9 @@
             'vendor' : []
         },
         'scripts': {
+            'wrap': '(function($, window, document) {%= body %})(window.jQuery, window, document);',
             'internals': {
-                'src': [],
+                'src': ['./js/internals/*'],
                 'dest': './js',
                 'name': 'common.js'
             },
