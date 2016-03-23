@@ -28,6 +28,8 @@
     "gulp-clean-css": "^2.0.3",
     "gulp-concat": "^2.6.0",
     "gulp-exec": "^2.1.2",
+    "gulp-foreach": "^0.1.0",
+    "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
     "gulp-livereload": "^3.8.1",
     "gulp-notify": "^2.2.0",
@@ -42,7 +44,8 @@
     "gulp-util": "^3.0.7",
     "gulp-wrap-js": "^0.4.1",
     "require-dir": "^0.3.0",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "yargs": "^4.3.2"
   },
   "author": "Christophe VERGNE",
   "license": "ISC",

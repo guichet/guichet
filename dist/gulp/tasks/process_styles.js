@@ -8,11 +8,13 @@
   var requireDir = require('require-dir');
   var runSequence = require('run-sequence');
   var config = require('../config.js');
+  var argv = require('yargs').argv;
   var $ = {};
 
   /**
    * Gulp plugins
    */
+  $.gulpif       = require('gulp-if')
   $.concat       = require('gulp-concat');
   $.plumber      = require('gulp-plumber');
   $.sass         = require('gulp-sass');
@@ -20,6 +22,7 @@
   $.cleanCSS     = require('gulp-clean-css');
   $.autoprefixer = require('gulp-autoprefixer');
   $.sourcemaps   = require('gulp-sourcemaps');
+  $.livereload   = require('gulp-livereload');
   $.notify       = require('gulp-notify');
 
 
@@ -49,7 +52,9 @@
                 .pipe($.autoprefixer(config.styles.autoprefixer))
                 .pipe($.cleanCSS(config.styles.cleancss))
             .pipe($.sourcemaps.write('.'))
-        .pipe(gulp.dest(config.styles.sass.dest));
+        .pipe(gulp.dest(config.styles.sass.dest))
+        .pipe($.livereload())
+        .pipe($.gulpif(argv.notify, $.notify('✅ ' + config.projectName + ' : Sass compilation')));
   });
 
   /**
