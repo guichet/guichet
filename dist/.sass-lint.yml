@@ -1,0 +1,61 @@
+#########################
+## Sample Sass Lint File
+#########################
+# Linter Options
+options:
+  merge-default-rules: true
+# File Options
+files:
+  include: 'sass/**/*.s+(a|c)ss'
+  ignore:
+    - 'sass/vendor/**/*.*'
+# Rule Configuration
+rules:
+  extends-before-mixins: 2
+  extends-before-declarations: 2
+  placeholder-in-extend: 2
+  mixins-before-declarations:
+    - 2
+    -
+      exclude:
+        - breakpoint
+        - mq
+
+  no-warn: 1
+  no-debug: 1
+  no-ids: 2
+  no-important: 2
+  brace-style: 2,
+  border-zero:
+    - 2
+    -
+      convention: '0'
+  space-after-comma: 2,
+  space-after-colon: 2,
+  space-around-operator: 2,
+  space-before-brace: 2,
+  space-before-colon: 0,
+  space-between-parens: 2,
+  trailing-semicolon: 2,
+  hex-notation:
+    - 2
+    -
+      style: uppercase
+  indentation:
+    - 2
+    -
+      size: 4
+  property-sort-order:
+    - 1
+    -
+      order:
+        - display
+        - margin
+      ignore-custom-properties: true
+  variable-for-property:
+    - 2
+    -
+      properties:
+        - margin
+        - content
+  final-newline: 0
