@@ -59,11 +59,24 @@
     });
 
     /**
+    * Task: 'gulp images'
+    */
+    gulp.task('images', 'Optimize images then watch', function(){
+        runSequence(
+            '_process_images'
+        );
+    }, {
+        options: {
+            'notify': '└- send desktop notification when task is finished'
+        }
+    });
+
+    /**
     * Task: 'gulp all'
     */
-    gulp.task('all', 'Process Styles & Scripts simultaneously', function(){
+    gulp.task('all', 'Process Styles, Scripts and Images simultaneously', function(){
         runSequence(
-            ['styles', 'scripts']
+            ['styles', 'scripts', 'images']
         );
     }, {
         options: {

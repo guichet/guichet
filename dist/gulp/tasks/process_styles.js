@@ -48,7 +48,11 @@
                 return path;
             }))
             .pipe(gulp.dest(config.styles.vendor.dest))
-            .pipe($.gulpif(argv.notify, $.notify('✅ ' + config.projectName + ' : Styles vendors copied')));
+            .pipe($.gulpif(argv.notify, $.notify({
+                message : '✅ Styles vendors copied',
+                title   : config.projectName + ' (Gulp)',
+                onLast  : true
+            })));
     });
 
 
@@ -80,17 +84,11 @@
                 .pipe($.sourcemaps.write('.'))
             .pipe(gulp.dest(config.styles.sass.dest))
             .pipe($.livereload())
-            .pipe($.gulpif(argv.notify, $.notify('✅ ' + config.projectName + ' : Sass compilation')));
-    });
-
-    /**
-    * Sass watch sequence task
-    */
-    gulp.task('_sass_watch', function() {
-        runSequence(
-            '_sass_lint',
-            '_sass_compile'
-        );
+            .pipe($.gulpif(argv.notify, $.notify({
+                message : '✅ Sass compilation done',
+                title   : config.projectName + ' (Gulp)',
+                onLast  : true
+            })));
     });
 
     /**
@@ -104,6 +102,15 @@
         );
     });
 
+    /**
+    * Sass watch sequence task
+    */
+    gulp.task('_sass_watch', function() {
+        runSequence(
+            '_sass_lint',
+            '_sass_compile'
+        );
+    });
 
     /**
     * Watch

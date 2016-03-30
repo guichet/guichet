@@ -41,7 +41,11 @@
                 return path;
             }))
             .pipe(gulp.dest(config.scripts.vendor.dest))
-            .pipe($.gulpif(argv.notify, $.notify('✅ ' + config.projectName + ' : Scripts vendors copied')));
+            .pipe($.gulpif(argv.notify, $.notify({
+                message : '✅ Scripts vendors copied',
+                title   : config.projectName + ' (Gulp)',
+                onLast  : true
+            })));
     });
 
     /**
@@ -65,16 +69,11 @@
             .pipe($.sourcemaps.write('.'))
             .pipe(gulp.dest(config.scripts.internals.dest))
             .pipe($.livereload())
-            .pipe($.gulpif(argv.notify, $.notify('✅ ' + config.projectName + ' : JS processing')));
-    });
-
-    /**
-    * Watch sequence task
-    */
-    gulp.task('_js_watch', function() {
-        runSequence(
-            '_js_concat'
-        );
+            .pipe($.gulpif(argv.notify, $.notify({
+                message : '✅ JS build done',
+                title   : config.projectName + ' (Gulp)',
+                onLast  : true
+            })));
     });
 
     /**
@@ -87,6 +86,14 @@
         );
     });
 
+    /**
+    * Watch sequence task
+    */
+    gulp.task('_js_watch', function() {
+        runSequence(
+            '_js_concat'
+        );
+    });
 
     /**
     * Watch
