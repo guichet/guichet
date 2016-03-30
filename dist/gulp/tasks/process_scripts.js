@@ -22,6 +22,7 @@
     $.rename     = require('gulp-rename');
     $.wrapJS     = require("gulp-wrap-js");
     $.sourcemaps = require('gulp-sourcemaps');
+    $.uglify     = require('gulp-uglify');
     $.livereload = require('gulp-livereload');
     $.notify     = require('gulp-notify');
 
@@ -66,6 +67,7 @@
             }))
             .pipe($.addsrc(config.scripts.vendor.dest + '**/*.js'))
             .pipe($.concat(config.scripts.internals.name))
+            .pipe($.uglify())
             .pipe($.sourcemaps.write('.'))
             .pipe(gulp.dest(config.scripts.internals.dest))
             .pipe($.livereload())
