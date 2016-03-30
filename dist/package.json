@@ -24,6 +24,7 @@
   ],
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-add-src": "^0.2.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-clean-css": "^2.0.3",
     "gulp-concat": "^2.6.0",
@@ -53,5 +54,8 @@
   "bugs": {
     "url": "https://github.com/KitaeAgency/guichet/issues"
   },
-  "homepage": "https://github.com/KitaeAgency/guichet#readme"
+  "homepage": "https://github.com/KitaeAgency/guichet#readme",
+  "dependencies": {
+    "jquery": "^2.2.2"
+  }
 }

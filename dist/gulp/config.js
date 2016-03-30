@@ -13,9 +13,7 @@
                 browsers: ['last 2 versions', 'ie >= 10'],
                 cascade: false
             },
-            cleancss: {
-
-            },
+            cleancss: {},
             'vendor' : {
                 'files': [],
                 'dest': './sass/vendor/'
@@ -29,7 +27,9 @@
                 'name': 'common.js'
             },
             'vendor': {
-                'files': [],
+                'files': [
+                    './node_modules/jquery/dist/jquery.js'
+                ],
                 'dest': './js/vendor/'
             }
         },

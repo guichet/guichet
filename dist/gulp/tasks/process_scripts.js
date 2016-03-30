@@ -14,6 +14,7 @@
     /**
     * Gulp plugins
     */
+    $.addsrc     = require('gulp-add-src');
     $.gulpif     = require('gulp-if');
     $.foreach    = require('gulp-foreach');
     $.concat     = require('gulp-concat');
@@ -47,10 +48,7 @@
     * Concat JS files
     */
     gulp.task('_js_concat', function () {
-        var files = [config.scripts.vendor.dest + '**/*.js'];;
-            files.concat(config.scripts.internals.src);
-
-        return gulp.src(files)
+        return gulp.src(config.scripts.internals.src)
             .pipe($.plumber({
                 errorHandler: function (error) {
                     console.error(error.message);
@@ -62,6 +60,7 @@
                 return stream
                     .pipe($.wrapJS(config.scripts.wrap))
             }))
+            .pipe($.addsrc(config.scripts.vendor.dest + '**/*.js'))
             .pipe($.concat(config.scripts.internals.name))
             .pipe($.sourcemaps.write('.'))
             .pipe(gulp.dest(config.scripts.internals.dest))
