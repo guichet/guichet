@@ -30,7 +30,7 @@
     /**
     * Copy vendors
     */
-    gulp.task('styles_copy_vendors', function() {
+    gulp.task('_styles_copy_vendors', function() {
         return gulp.src(config.styles.vendor.files)
             .pipe($.plumber({
                 errorHandler: function (error) {
@@ -55,7 +55,7 @@
     /**
     * Lint Sass files
     */
-    gulp.task('sass_lint', function () {
+    gulp.task('_sass_lint', function () {
         return gulp.src(config.styles.sass.src)
             .pipe($.sassLint())
             .pipe($.sassLint.format())
@@ -65,7 +65,7 @@
     /**
     * Sass compile task
     */
-    gulp.task('sass_compile', function() {
+    gulp.task('_sass_compile', function() {
         return gulp.src(config.styles.sass.src)
             .pipe($.plumber({
                 errorHandler: function (error) {
@@ -86,21 +86,21 @@
     /**
     * Sass watch sequence task
     */
-    gulp.task('sass_watch', function() {
+    gulp.task('_sass_watch', function() {
         runSequence(
-            'sass_lint',
-            'sass_compile'
+            '_sass_lint',
+            '_sass_compile'
         );
     });
 
     /**
     * Complete task
     */
-    gulp.task('process_styles', function(){
+    gulp.task('_process_styles', function(){
         runSequence(
-            'styles_copy_vendors',
-            'sass_lint',
-            'sass_compile'
+            '_styles_copy_vendors',
+            '_sass_lint',
+            '_sass_compile'
         );
     });
 
@@ -108,8 +108,8 @@
     /**
     * Watch
     */
-    gulp.task('watch_styles', function() {
-        return gulp.watch(config.styles.sass.src, ['sass_watch']);
+    gulp.task('_watch_styles', function() {
+        return gulp.watch(config.styles.sass.src, ['_sass_watch']);
     });
 
 })();
