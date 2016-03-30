@@ -16,7 +16,10 @@
             cleancss: {
 
             },
-            'vendor' : []
+            'vendor' : {
+                'files': [],
+                'dest': './sass/vendor/'
+            }
         },
         'scripts': {
             'wrap': '(function($, window, document) {%= body %})(window.jQuery, window, document);',
@@ -25,7 +28,10 @@
                 'dest': './js',
                 'name': 'common.js'
             },
-            'vendor': []
+            'vendor': {
+                'files': [],
+                'dest': './js/vendor/'
+            }
         },
         'images': {
             'src': './img'
