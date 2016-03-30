@@ -21,6 +21,7 @@
     $.plumber    = require('gulp-plumber');
     $.imagemin   = require('gulp-imagemin');
     $.notify     = require('gulp-notify');
+    $.util       = require('gulp-util');
 
 
     /**
@@ -58,6 +59,7 @@
     * Watch sequence task
     */
     gulp.task('_img_watch', function() {
+        $.util.log('[Watch] Images files modified.');
         runSequence(
             '_img_optimize'
         );

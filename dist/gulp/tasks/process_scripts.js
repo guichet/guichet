@@ -25,6 +25,7 @@
     $.uglify     = require('gulp-uglify');
     $.livereload = require('gulp-livereload');
     $.notify     = require('gulp-notify');
+    $.util       = require('gulp-util');
 
 
     /**
@@ -92,6 +93,7 @@
     * Watch sequence task
     */
     gulp.task('_js_watch', function() {
+        $.util.log('[Watch] Scripts files modified.');
         runSequence(
             '_js_concat'
         );

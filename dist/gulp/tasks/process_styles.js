@@ -25,6 +25,7 @@
     $.sourcemaps   = require('gulp-sourcemaps');
     $.livereload   = require('gulp-livereload');
     $.notify       = require('gulp-notify');
+    $.util         = require('gulp-util');
 
 
     /**
@@ -106,6 +107,7 @@
     * Sass watch sequence task
     */
     gulp.task('_sass_watch', function() {
+        $.util.log('[Watch] Styles files modified.');
         runSequence(
             '_sass_lint',
             '_sass_compile'
