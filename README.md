@@ -36,13 +36,17 @@ If your browser requirements are differents you can also change `styles.autopref
 
 ## How to use ?
 
-Just run  
+To list all available tasks, just run  
 
 ```bash
 gulp
 ```
 
-It will show you all the available tasks. The main task to run them all is `gulp all`.
+To start the main task that will run them all then watch, run
+
+```bash
+gulp all --notify --silent
+```
 
 ---
 
