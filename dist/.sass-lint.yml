@@ -69,3 +69,4 @@ rules:
     - 1
     -
       max-depth: 3
+  force-element-nesting: 0
