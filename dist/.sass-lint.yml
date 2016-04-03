@@ -1,5 +1,5 @@
 #########################
-## Sample Sass Lint File
+## Sass Lint Config File
 #########################
 # Linter Options
 options:
@@ -25,7 +25,8 @@ rules:
   no-debug: 1
   no-ids: 2
   no-important: 2
-  brace-style: 2,
+  hex-length: 0
+  brace-style: 2
   border-zero:
     - 2
     -
@@ -34,7 +35,8 @@ rules:
   space-after-colon: 2,
   space-around-operator: 2,
   space-before-brace: 2,
-  space-before-colon: 0,
+  space-before-colon:
+    - 0
   space-between-parens: 2,
   trailing-semicolon: 2,
   hex-notation:
@@ -45,6 +47,7 @@ rules:
     - 2
     -
       size: 4
+  no-css-comments: 0
   property-sort-order:
     - 1
     -
@@ -52,10 +55,17 @@ rules:
         - display
         - margin
       ignore-custom-properties: true
-  variable-for-property:
+  variable-for-property: 0
+  final-newline: 0
+  quotes:
+    - 0
+  no-url-protocols: 0
+  single-line-per-selector: 0
+  leading-zero:
     - 2
     -
-      properties:
-        - margin
-        - content
-  final-newline: 0
+      include: true
+  nesting-depth:
+    - 1
+    -
+      max-depth: 3
