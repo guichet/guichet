@@ -66,7 +66,7 @@
                 return stream
                     .pipe($.wrapJS(config.scripts.wrap))
             }))
-            .pipe($.addsrc(config.scripts.vendor.dest + '**/*.js'))
+            .pipe($.addsrc.prepend(config.scripts.vendor.dest + '**/*.js'))
             .pipe($.concat(config.scripts.internals.name))
             .pipe($.uglify())
             .pipe($.sourcemaps.write('.'))
@@ -83,6 +83,7 @@
     * Complete task
     */
     gulp.task('_process_scripts', function(){
+        $.livereload.listen();
         runSequence(
             '_js_copy_vendors',
             '_js_concat'

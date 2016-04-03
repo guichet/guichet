@@ -61,7 +61,7 @@
     * Lint Sass files
     */
     gulp.task('_sass_lint', function () {
-        return gulp.src(config.styles.sass.src)
+        return gulp.src([config.styles.sass.src, '!'+config.styles.vendor.dest, '!'+config.styles.vendor.dest+'**'])
             .pipe($.sassLint())
             .pipe($.sassLint.format())
             .pipe($.sassLint.failOnError())
@@ -71,7 +71,7 @@
     * Sass compile task
     */
     gulp.task('_sass_compile', function() {
-        return gulp.src(config.styles.sass.src)
+        return gulp.src([config.styles.sass.src, '!'+config.styles.vendor.dest, '!'+config.styles.vendor.dest+'**'])
             .pipe($.plumber({
                 errorHandler: function (error) {
                     console.error(error.message);
@@ -96,6 +96,7 @@
     * Complete task
     */
     gulp.task('_process_styles', function(){
+        $.livereload.listen();
         runSequence(
             '_styles_copy_vendors',
             '_sass_lint',
@@ -118,7 +119,7 @@
     * Watch
     */
     gulp.task('_watch_styles', function() {
-        return gulp.watch(config.styles.sass.src, ['_sass_watch']);
+        return gulp.watch([config.styles.sass.src, '!'+config.styles.vendor.dest, '!'+config.styles.vendor.dest+'**'], ['_sass_watch']);
     });
 
 })();
