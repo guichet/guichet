@@ -75,6 +75,17 @@ if [[ $NOMAKEDIRS = false ]]; then
     echo -e "\n${GRAY}┌─────────────────────────┐"
     echo -e "│${NC} 📁  Creating directories ${GRAY}│"
     echo -e "└─────────────────────────┘${NC}"
-    # mkdir -p ./img/ ./img/src/ ./js/ ./js/internals/ ./js/vendor/ ./sass/ ./sass/vendor/ ./css/
+    mkdir -p ./img/ ./img/src/ ./js/ ./js/internals/ ./js/vendor/ ./sass/ ./sass/vendor/ ./css/
     echo -e "  ${CHECK}  Directory structure created"
+fi
+
+# SVN
+if [[ $SVN = true ]]; then
+    echo -e "\n${GRAY}┌───────────────────────┐"
+    echo -e "│${NC} 🕙  Set SVN Properties ${GRAY}│"
+    echo -e "└───────────────────────┘${NC}"
+    svn propset svn:ignore "node_modules" .
+    echo -e "  ${CHECK}  SVN ignore set"
+    svn add ./*
+    echo -e "  ${CHECK}  SVN add done"
 fi
