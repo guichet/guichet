@@ -31,14 +31,21 @@
     /**
     * Copy vendors
     */
-    gulp.task('_js_copy_vendors', function() {
+    gulp.task('_g_js_copy_vendors', function() {
         return gulp.src(config.scripts.vendor.files)
-            .pipe($.plumber({
-                errorHandler: function (error) {
-                    console.error(error.message);
-                    this.emit('end');
-                }
-            }))
+            .pipe($.gulpif(argv.notify, $.plumber({
+                errorHandler: $.notify.onError(function(){
+                    if (!argv.notify) {
+                        return false;
+                    }
+
+                    return {
+                        message: "‼️ JS vendors error: <%= error.message %>",
+                        title: config.projectName + ' (Gulp)',
+                        emitError: false
+                    }
+                })
+            })))
             .pipe($.rename(function (path) {
                 return path;
             }))
@@ -53,14 +60,21 @@
     /**
     * Concat JS files
     */
-    gulp.task('_js_concat', function () {
+    gulp.task('_g_js_concat', function () {
         return gulp.src(config.scripts.internals.src)
-            .pipe($.plumber({
-                errorHandler: function (error) {
-                    console.error(error.message);
-                    this.emit('end');
-                }
-            }))
+            .pipe($.gulpif(argv.notify, $.plumber({
+                errorHandler: $.notify.onError(function(){
+                    if (!argv.notify) {
+                        return false;
+                    }
+
+                    return {
+                        message: "‼️ JS Concat error: <%= error.message %>",
+                        title: config.projectName + ' (Gulp)',
+                        emitError: false
+                    }
+                })
+            })))
             .pipe($.sourcemaps.init())
             .pipe($.foreach(function(stream, file){
                 return stream
@@ -82,29 +96,34 @@
     /**
     * Complete task
     */
-    gulp.task('_process_scripts', function(){
+    gulp.task('_g_process_scripts', function(){
         $.livereload.listen();
         runSequence(
-            '_js_copy_vendors',
-            '_js_concat'
+            '_g_js_copy_vendors',
+            '_g_js_concat'
         );
     });
 
     /**
     * Watch sequence task
     */
-    gulp.task('_js_watch', function() {
+    gulp.task('_g_js_watch', function() {
         $.util.log('[Watch] Scripts files modified.');
         runSequence(
-            '_js_concat'
+            '_g_js_concat'
         );
     });
 
     /**
     * Watch
     */
-    gulp.task('_watch_scripts', function() {
-        return gulp.watch(config.scripts.internals.src, ['_js_watch']);
+    gulp.task('_g_watch_scripts', function() {
+        var watcher = gulp.watch(config.scripts.internals.src, ['_g_js_watch']);
+        watcher.on('change', function(event) {
+          $.util.log('[Watcher] File ' + $.util.colors.yellow(event.path) + ' was ' + $.util.colors.cyan(event.type) + ', running tasks...');
+        });
+
+        return watcher;
     });
 
 })();

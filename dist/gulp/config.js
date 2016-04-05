@@ -34,7 +34,8 @@
             }
         },
         'images': {
-            'src': './img/'
+            'src': './img/',
+            'watch': './img/src/'
         }
     };
 }());

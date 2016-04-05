@@ -27,14 +27,21 @@
     /**
     * Optimize images
     */
-    gulp.task('_img_optimize', function() {
+    gulp.task('_g_img_optimize', function() {
         return gulp.src(config.images.src + '**/*')
-            .pipe($.plumber({
-                errorHandler: function (error) {
-                    console.error(error.message);
-                    this.emit('end');
-                }
-            }))
+            .pipe($.gulpif(argv.notify, $.plumber({
+                errorHandler: $.notify.onError(function(){
+                    if (!argv.notify) {
+                        return false;
+                    }
+
+                    return {
+                        message: "‼️ Images optimization error: <%= error.message %>",
+                        title: config.projectName + ' (Gulp)',
+                        emitError: false
+                    }
+                })
+            })))
             .pipe($.imagemin({
                 progressive: true
             }))
@@ -49,27 +56,27 @@
     /**
     * Complete task
     */
-    gulp.task('_process_images', function(){
+    gulp.task('_g_process_images', function(){
         runSequence(
-            '_img_optimize'
+            '_g_img_optimize'
         );
     });
 
     /**
     * Watch sequence task
     */
-    gulp.task('_img_watch', function() {
+    gulp.task('_g_img_watch', function() {
         $.util.log('[Watch] Images files modified.');
         runSequence(
-            '_img_optimize'
+            '_g_img_optimize'
         );
     });
 
     /**
     * Watch
     */
-    gulp.task('_watch_images', function() {
-        return gulp.watch(config.images.src + '**/*', ['_img_watch']);
+    gulp.task('_g_watch_images', function() {
+        return gulp.watch(config.images.watch + '**/*', ['_g_img_watch']);
     });
 
 })();

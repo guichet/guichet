@@ -35,8 +35,8 @@
     */
     gulp.task('styles', 'Copy CSS vendors, Lint & Compile Sass files then watch', function(){
         runSequence(
-            '_process_styles',
-            '_watch_styles'
+            '_g_process_styles',
+            '_g_watch_styles'
         );
     }, {
         options: {
@@ -49,8 +49,8 @@
     */
     gulp.task('scripts', 'Copy JS vendors, Lint & Build JS files then watch', function(){
         runSequence(
-            '_process_scripts',
-            '_watch_scripts'
+            '_g_process_scripts',
+            '_g_watch_scripts'
         );
     }, {
         options: {
@@ -63,7 +63,7 @@
     */
     gulp.task('images', 'Optimize images then watch', function(){
         runSequence(
-            '_process_images'
+            '_g_process_images'
         );
     }, {
         options: {
