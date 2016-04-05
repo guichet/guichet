@@ -9,7 +9,13 @@ Why "*Guichet*" ? [Because](https://www.legifrance.gouv.fr/affichTexte.do;jsessi
 
 ## How to setup ?
 
-### Download
+### Quick setup
+
+```bash
+curl -s https://gist.githubusercontent.com/cvergne/a8b734a93e0c6741580648fe493284f1/raw/f5cf0c5fd2b544e12a220f59b336827d06e126a3/guichet-install.sh | sh
+```
+
+### Manual download & setup
 
 Thanks to SVN support on Github, we can use a SVN feature to quick download all the content of the `dist` directory without the versioning system and other useless files.
 
@@ -28,15 +34,15 @@ npm install
 
 ### Configure
 
-You have a config file in `gulp/config.js` with default values but you can edit it with your own settings.  
-We advise you to keep all the default values except `projectName`, `styles.vendor.files` and `scripts.vendor.files`.  
-If your browser requirements are differents you can also change `styles.autoprefixers.browsers`.  
+You have a config file in `gulp/config.js` with default values but you can edit it with your own settings.
+We advise you to keep all the default values except `projectName`, `styles.vendor.files` and `scripts.vendor.files`.
+If your browser requirements are differents you can also change `styles.autoprefixers.browsers`.
 
 ---
 
 ## How to use ?
 
-To list all available tasks, just run  
+To list all available tasks, just run
 
 ```bash
 gulp
