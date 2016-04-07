@@ -86,6 +86,6 @@ if [[ $SVN = true ]]; then
     echo -e "└───────────────────────┘${NC}"
     svn propset svn:ignore "node_modules" .
     echo -e "  ${CHECK}  SVN ignore set"
-    svn add ./*
-    echo -e "  ${CHECK}  SVN add done"
+    # svn add ./*
+    # echo -e "  ${CHECK}  SVN add done"
 fi

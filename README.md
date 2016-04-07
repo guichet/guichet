@@ -12,11 +12,11 @@ Why "*Guichet*" ? [Because](https://www.legifrance.gouv.fr/affichTexte.do;jsessi
 ### Quick setup
 
 ```bash
-curl -s https://gist.githubusercontent.com/cvergne/a8b734a93e0c6741580648fe493284f1/raw/8516f54ee9c783bfdc8b206f551a2b99024b3560/guichet-install.sh | bash -s --
+curl -s https://gist.githubusercontent.com/cvergne/a8b734a93e0c6741580648fe493284f1/raw/8af0cfd1832a56f142241ce5acb97b6f08fb673d/guichet-install.sh | bash -s --
 ```
 
 #### Arguments
-You can add the following arguments for advanced setup or options :  
+You can add the following arguments for advanced setup or options :
 
 - `--nomakedirs` — It will step the making of default folders _(sass, js, etc.)_
 - `--svn` — It will set the right svn properties to your folders
