@@ -5,8 +5,8 @@
         'projectName': 'GUICHET',
         'styles': {
             'sass': {
-                'src'         : './sass/**.scss',
-                'dest'        : './css',
+                'src'         : 'sass/**.scss',
+                'dest'        : 'css',
                 'outputStyle' : 'expanded'
             },
             'autoprefixer': {
@@ -16,26 +16,26 @@
             cleancss: {},
             'vendor' : {
                 'files': [],
-                'dest': './sass/vendor/'
+                'dest': 'sass/vendor/'
             }
         },
         'scripts': {
             'wrap': '(function($, window, document) {%= body %})(window.jQuery, window, document);',
             'internals': {
-                'src': ['./js/internals/*'],
-                'dest': './js',
+                'src': ['js/internals/*'],
+                'dest': 'js',
                 'name': 'common.js'
             },
             'vendor': {
                 'files': [
-                    './node_modules/jquery/dist/jquery.js'
+                    'node_modules/jquery/dist/jquery.js'
                 ],
-                'dest': './js/vendor/'
+                'dest': 'js/vendor/'
             }
         },
         'images': {
-            'src': './img/',
-            'watch': './img/src/'
+            'src': 'img/',
+            'watch': 'img/src/'
         }
     };
 }());
