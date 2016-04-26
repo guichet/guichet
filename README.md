@@ -12,7 +12,7 @@ Why "*Guichet*" ? [Because](https://www.legifrance.gouv.fr/affichTexte.do;jsessi
 ### Quick setup
 
 ```bash
-curl -s https://gist.githubusercontent.com/cvergne/a8b734a93e0c6741580648fe493284f1/raw/8af0cfd1832a56f142241ce5acb97b6f08fb673d/guichet-install.sh | bash -s --
+curl -s http://www.kitae.fr/guichet/install | bash -s --
 ```
 
 #### Arguments
