@@ -1,0 +1,134 @@
+<?php
+#!/usr/local/bin/php
+
+define('REPO_URL', 'https://github.com/KitaeAgency/guichet/trunk/dist/');
+
+/*=============================================
+=            DON'T TOUCH THIS PART            =
+=============================================*/
+/*----------  Arguments  ----------*/
+$ARGS = array();
+foreach ($argv as $arg) {
+    $arg = ltrim($arg, '-');
+    if (!empty($arg)) {
+        $arg = explode('=', $arg);
+        if (count($arg) > 1) {
+            $ARGS[$arg[0]] = $arg[1];
+        } else {
+            $ARGS[$arg[0]] = true;
+        }
+    }
+}
+
+/*----------  Colorize output  ----------*/
+function out($text, $color = null, $newLine = true)
+{
+    $box = false;
+    if ('box' === $color) {
+        $box = true;
+        $color = null;
+    }
+
+    $styles = array(
+        'success' => "  \033[0;32m✔\033[0m  %s",
+        'error'   => "\033[31;31m%s\033[0m",
+        'info'    => "\033[33;33m%s\033[0m",
+        'gray'    => "\033[30m%s\033[0m",
+        'green'   => "\033[32m%s\033[0m"
+    );
+
+    $format = "  \033[30m•\033[0m  %s";
+    if ($box) {
+        $format = "%s";
+    }
+
+    if (isset($styles[$color]) && USE_ANSI) {
+        $format = $styles[$color];
+    }
+
+    if ($newLine && !$box) {
+        $format .= PHP_EOL;
+    }
+
+    if ($box) {
+        printf($styles['gray'] . PHP_EOL, '┌' . str_repeat('─', strlen($text) - 1) . '┐');
+        printf($styles['gray'], '│ ');
+    }
+
+    printf($format, $text);
+
+    if ($box) {
+        printf($styles['gray'] . PHP_EOL, ' │');
+        printf($styles['gray'] . PHP_EOL, '└' . str_repeat('─', strlen($text) - 1) . '┘');
+    }
+}
+
+function shexec($command, $success) {
+    $errors = 0;
+    $command .= ' 2>&1';
+    exec($command, $output);
+
+    foreach ($output as $line) {
+        $style = null;
+        if (preg_match('/unable|error|not\ found/isU', $line)) {
+            $style = 'error';
+            $errors++;
+        }
+        out($line, $style);
+    }
+
+    if (0 === $errors) {
+        out($success, 'success');
+    }
+}
+
+/*=====  End of DON'T TOUCH THIS PART  ======*/
+
+/*=============================
+=            TASKS            =
+=============================*/
+
+/*----------  Help  ----------*/
+function showHelp()
+{
+    echo <<<EOF
+Guichet Installer
+-----------------
+Options
+--help               this help
+--nodirs             skip the creation of default directories
+--svn                set default ignore properties
+
+EOF;
+}
+
+/*----------  Subsection comment block  ----------*/
+
+
+/*----------  Main Process  ----------*/
+function process($A)
+{
+    # HELP
+    if ($A['help']) {
+        showHelp();
+    }
+
+    # DOWNLOADING GUICHET
+    out('📥  Downloading Guichet', 'box');
+    shexec('svn export --force -q ' . REPO_URL . ' ./', 'Guichet downloaded');
+
+    # INSTALLING DEPENDENCIES
+    out('📝  Installing dependencies', 'box');
+    shexec('npm install --silent', 'Dependencies installed');
+}
+
+
+/*=====  End of TASKS  ======*/
+
+
+
+/*===========================
+=            Run            =
+===========================*/
+process($ARGS);
+/*=====  End of Run  ======*/
