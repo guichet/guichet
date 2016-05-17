@@ -32,7 +32,8 @@
     * Copy vendors
     */
     gulp.task('_g_js_copy_vendors', function() {
-        return gulp.src(config.scripts.vendor.files)
+        return Object.keys(config.scripts.vendor.files).forEach(function(key) {
+            gulp.src(config.scripts.vendor.files[key])
             .pipe($.gulpif(argv.notify, $.plumber({
                 errorHandler: $.notify.onError(function(){
                     if (!argv.notify) {
@@ -46,8 +47,8 @@
                     }
                 })
             })))
-            .pipe($.rename(function (path) {
-                return path;
+            .pipe($.rename({
+                prefix: key
             }))
             .pipe(gulp.dest(config.scripts.vendor.dest))
             .pipe($.gulpif(argv.notify, $.notify({
@@ -55,6 +56,7 @@
                 title   : config.projectName + ' (Gulp)',
                 onLast  : true
             })));
+        });
     });
 
     /**
