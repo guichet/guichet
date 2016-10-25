@@ -12,7 +12,7 @@ Why "*Guichet*" ? [Because](https://www.legifrance.gouv.fr/affichTexte.do;jsessi
 Just run the following command:
 
 ```bash
-curl -s http://www.kitae.fr/guichet/install | bash -s --
+curl -s http://guichet.download/install | bash -s --
 ```
 
 #### :small_blue_diamond: Arguments
@@ -56,7 +56,7 @@ If the script does not work, run manually the following commands:
 ```bash
 # Download
 #  it will download the content of the `dist` directory into your current folder.
-svn export --force https://github.com/KitaeAgency/guichet/trunk/dist/ ./
+svn export --force https://github.com/cvergne/guichet/trunk/dist/ ./
 
 # Install
 npm install
