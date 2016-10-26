@@ -56,7 +56,7 @@ If the script does not work, run manually the following commands:
 ```bash
 # Download
 #  it will download the content of the `dist` directory into your current folder.
-svn export --force https://github.com/cvergne/guichet/trunk/dist/ ./
+svn export --force https://github.com/guichet/guichet/trunk/dist/ ./
 
 # Install
 npm install
@@ -66,4 +66,4 @@ npm install
 
 ## :ballot_box_with_check: TODO
 
-Moved to issue [#1](https://github.com/KitaeAgency/guichet/issues/1).
+Moved to issue [#1](https://github.com/guichet/guichet/issues/1).
