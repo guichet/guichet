@@ -59,7 +59,7 @@ done
 echo -e "\n${GRAY}┌-───────────────────────┐"
 echo -e "│${NC} 📥  Downloading Guichet ${GRAY}│"
 echo -e "└────────────────────────┘${NC}"
-svn export --force -q https://github.com/KitaeAgency/guichet/trunk/dist/ ./
+svn export --force -q https://github.com/guichet/guichet/trunk/dist/ ./
 echo -e "  ${CHECK}  Guichet downloaded"
 
 
