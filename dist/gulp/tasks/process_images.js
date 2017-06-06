@@ -6,7 +6,7 @@
     */
     var gulp = require('gulp');
     var requireDir = require('require-dir');
-    var runSequence = require('run-sequence');
+    var runSequence = require('run-sequence').use(gulp);
     var config = require('../config.js');
     var argv = require('yargs').argv;
     var $ = {};
@@ -27,7 +27,7 @@
     /**
     * Optimize images
     */
-    gulp.task('_g_img_optimize', function() {
+    gulp.task('_g_img_optimize', false, function() {
         return gulp.src(config.images.src + '**/*')
             .pipe($.gulpif(argv.notify, $.plumber({
                 errorHandler: $.notify.onError(function(){
@@ -54,28 +54,34 @@
     });
 
     /**
-    * Complete task
+    * Task: 'gulp images'
     */
-    gulp.task('_g_process_images', function(){
-        runSequence(
-            '_g_img_optimize'
+    gulp.task('images', 'Optimize images then watch', function(callback){
+        return runSequence(
+            '_g_img_optimize',
+            callback
         );
+    }, {
+        options: {
+            'notify': '└- send desktop notification when task is finished'
+        }
     });
 
     /**
     * Watch sequence task
     */
-    gulp.task('_g_img_watch', function() {
+    gulp.task('_g_img_watch', false, function(callback) {
         $.util.log('[Watch] Images files modified.');
-        runSequence(
-            '_g_img_optimize'
+        return runSequence(
+            '_g_img_optimize',
+            callback
         );
     });
 
     /**
     * Watch
     */
-    gulp.task('_g_watch_images', function() {
+    gulp.task('_g_watch_images', false, function() {
         return gulp.watch(config.images.watch + '**/*', ['_g_img_watch']);
     });
 

@@ -6,7 +6,7 @@
     */
     var gulp = require('gulp');
     var requireDir = require('require-dir');
-    var runSequence = require('run-sequence');
+    var runSequence = require('run-sequence').use(gulp);
     var config = require('../config.js');
     var argv = require('yargs').argv;
     var $ = {};
@@ -31,38 +31,40 @@
     /**
     * Copy vendors
     */
-    gulp.task('_g_js_copy_vendors', function() {
-        return Object.keys(config.scripts.vendor.files).forEach(function(key) {
-            gulp.src(config.scripts.vendor.files[key])
-            .pipe($.gulpif(argv.notify, $.plumber({
-                errorHandler: $.notify.onError(function(){
-                    if (!argv.notify) {
-                        return false;
-                    }
+    gulp.task('_g_js_copy_vendors', false, function() {
+        let k = 0
+        return gulp.src(config.scripts.vendor.files)
+               .pipe($.foreach(function(stream, file) {
+                   return stream
+                    .pipe($.gulpif(argv.notify, $.plumber({
+                        errorHandler: $.notify.onError(function(){
+                            if (!argv.notify) {
+                                return false;
+                            }
 
-                    return {
-                        message: "‼️ JS vendors error: <%= error.message %>",
-                        title: config.projectName + ' (Gulp)',
-                        emitError: false
-                    }
-                })
-            })))
-            .pipe($.rename({
-                prefix: key
-            }))
-            .pipe(gulp.dest(config.scripts.vendor.dest))
-            .pipe($.gulpif(argv.notify, $.notify({
-                message : '✅ Scripts vendors copied',
-                title   : config.projectName + ' (Gulp)',
-                onLast  : true
-            })));
-        });
+                            return {
+                                message: "‼️ JS vendors error: <%= error.message %>",
+                                title: config.projectName + ' (Gulp)',
+                                emitError: false
+                            }
+                        })
+                    })))
+                    .pipe($.rename({
+                        prefix: (k++).toString()
+                    }))
+                    .pipe(gulp.dest(config.scripts.vendor.dest))
+               }))
+                .pipe($.gulpif((argv.notify), $.notify({
+                    message : '✅ Scripts vendors copied',
+                    title   : config.projectName + ' (Gulp)',
+                    onLast  : true
+                })));
     });
 
     /**
     * Concat JS files
     */
-    gulp.task('_g_js_concat', function () {
+    gulp.task('_g_js_concat', false, function () {
         return gulp.src(config.scripts.internals.src)
             .pipe($.gulpif(argv.notify, $.plumber({
                 errorHandler: $.notify.onError(function(){
@@ -77,17 +79,17 @@
                     }
                 })
             })))
-            .pipe($.sourcemaps.init())
             .pipe($.foreach(function(stream, file){
                 return stream
                     .pipe($.wrapJS(config.scripts.wrap))
             }))
             .pipe($.addsrc.prepend(config.scripts.vendor.dest + '**/*.js'))
+            .pipe($.sourcemaps.init())
             .pipe($.concat(config.scripts.internals.name))
             .pipe($.uglify())
             .pipe($.sourcemaps.write('.'))
             .pipe(gulp.dest(config.scripts.internals.dest))
-            .pipe($.livereload())
+            .pipe($.livereload({start: true}))
             .pipe($.gulpif(argv.notify, $.notify({
                 message : '✅ JS build done',
                 title   : config.projectName + ' (Gulp)',
@@ -96,30 +98,54 @@
     });
 
     /**
-    * Complete task
+    * Task: 'gulp scripts'
     */
-    gulp.task('_g_process_scripts', function(){
-        $.livereload.listen();
-        runSequence(
-            '_g_js_copy_vendors',
-            '_g_js_concat'
-        );
+    gulp.task('scripts', 'Copy JS vendors, Lint & Build JS files then watch', function(callback){
+        if (argv.nowatch) {
+            if (argv._.includes('all')) {
+                return runSequence(
+                    '_g_js_copy_vendors',
+                    '_g_js_concat',
+                    callback
+                );
+            } else {
+                return runSequence(
+                    '_g_js_copy_vendors',
+                    '_g_js_concat',
+                    '_givebackprompt',
+                    callback
+                );
+            }
+        } else {
+            return runSequence(
+                '_g_js_copy_vendors',
+                '_g_js_concat',
+                '_g_watch_scripts',
+                callback
+            );
+        }
+    }, {
+        options: {
+            'nowatch': '└- does not watch files for modifications',
+            'notify': '└- send desktop notification when task is finished'
+        }
     });
 
     /**
     * Watch sequence task
     */
-    gulp.task('_g_js_watch', function() {
+    gulp.task('_g_js_watch', false, function(callback) {
         $.util.log('[Watch] Scripts files modified.');
-        runSequence(
-            '_g_js_concat'
+        return runSequence(
+            '_g_js_concat',
+            callback
         );
     });
 
     /**
     * Watch
     */
-    gulp.task('_g_watch_scripts', function() {
+    gulp.task('_g_watch_scripts', false, function() {
         var watcher = gulp.watch(config.scripts.internals.src, ['_g_js_watch']);
         watcher.on('change', function(event) {
           $.util.log('[Watcher] File ' + $.util.colors.yellow(event.path) + ' was ' + $.util.colors.cyan(event.type) + ', running tasks...');

@@ -13,6 +13,7 @@ WORDPRESS=false
 NOMAKEDIRS=false
 SVN=false
 
+# Functions
 function usage()
 {
     echo "Usage"
@@ -24,6 +25,7 @@ function usage()
     echo "--wordpress=$WORDPRESS"
     echo ""
 }
+# end: functions
 
 while [ "$1" != "" ]; do
     PARAM=`echo $1 | awk -F= '{print $1}'`

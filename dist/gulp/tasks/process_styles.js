@@ -6,7 +6,7 @@
     */
     var gulp = require('gulp');
     var requireDir = require('require-dir');
-    var runSequence = require('run-sequence');
+    var runSequence = require('run-sequence').use(gulp);
     var config = require('../config.js');
     var argv = require('yargs').argv;
     var $ = {};
@@ -31,7 +31,7 @@
     /**
     * Copy vendors
     */
-    gulp.task('_g_styles_copy_vendors', function() {
+    gulp.task('_g_styles_copy_vendors', false, function() {
         return gulp.src(config.styles.vendor.files)
             .pipe($.gulpif(argv.notify, $.plumber({
                 errorHandler: $.notify.onError(function(){
@@ -67,7 +67,7 @@
     /**
     * Lint Sass files
     */
-    gulp.task('_g_sass_lint', function () {
+    gulp.task('_g_sass_lint', false, function () {
         return gulp.src([config.styles.sass.src, '!'+config.styles.vendor.dest, '!'+config.styles.vendor.dest+'**'])
             .pipe($.gulpif(argv.notify, $.plumber({
                 errorHandler: $.notify.onError(function(){
@@ -90,7 +90,7 @@
     /**
     * Sass compile task
     */
-    gulp.task('_g_sass_compile', function() {
+    gulp.task('_g_sass_compile', false, function() {
         return gulp.src([config.styles.sass.src, '!'+config.styles.vendor.dest, '!'+config.styles.vendor.dest+'**'])
             .pipe($.gulpif(argv.notify, $.plumber({
                 errorHandler: $.notify.onError(function(){
@@ -111,7 +111,7 @@
                     .pipe($.cleanCSS(config.styles.cleancss))
                 .pipe($.sourcemaps.write('.'))
             .pipe(gulp.dest(config.styles.sass.dest))
-            .pipe($.livereload())
+            .pipe($.livereload({start: true}))
             .pipe($.gulpif(argv.notify, $.notify({
                 message : '✅ Sass compilation done',
                 title   : config.projectName + ' (Gulp)',
@@ -120,31 +120,58 @@
     });
 
     /**
-    * Complete task
+    * Task: 'gulp styles'
     */
-    gulp.task('_g_process_styles', function(){
-        $.livereload.listen();
-        runSequence(
-            '_g_styles_copy_vendors',
-            '_g_sass_lint',
-            '_g_sass_compile'
-        );
+    gulp.task('styles', 'Copy CSS vendors, Lint & Compile Sass files then watch', function(callback){
+        if (argv.nowatch) {
+            if (argv._.includes('all')) {
+                return runSequence(
+                    '_g_styles_copy_vendors',
+                    '_g_sass_lint',
+                    '_g_sass_compile',
+                    callback
+                );
+            } else {
+                return runSequence(
+                    '_g_styles_copy_vendors',
+                    '_g_sass_lint',
+                    '_g_sass_compile',
+                    '_givebackprompt',
+                    callback
+                );
+            }
+        } else {
+            return runSequence(
+                '_g_styles_copy_vendors',
+                '_g_sass_lint',
+                '_g_sass_compile',
+                '_g_watch_styles',
+                callback
+            );
+        }
+
+    }, {
+        options: {
+            'nowatch': '└- does not watch files for modifications',
+            'notify': '└- send desktop notification when task is finished'
+        }
     });
 
     /**
     * Sass watch sequence task
     */
-    gulp.task('_g_sass_watch', function() {
-        runSequence(
+    gulp.task('_g_sass_watch', false, function(callback) {
+        return runSequence(
             '_g_sass_lint',
-            '_g_sass_compile'
+            '_g_sass_compile',
+            callback
         );
     });
 
     /**
     * Watch
     */
-    gulp.task('_g_watch_styles', function() {
+    gulp.task('_g_watch_styles', false, function() {
         var watcher = gulp.watch([config.styles.sass.src, '!'+config.styles.vendor.dest, '!'+config.styles.vendor.dest+'**'], ['_g_sass_watch']);
         watcher.on('change', function(event) {
           $.util.log('[Watcher] File ' + $.util.colors.yellow(event.path) + ' was ' + $.util.colors.cyan(event.type) + ', running tasks...');

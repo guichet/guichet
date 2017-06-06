@@ -1,0 +1,4 @@
+AddType text/plain .sh
+
+RewriteEngine On
+RewriteRule ^install$ install.sh [NC,L]

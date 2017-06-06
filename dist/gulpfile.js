@@ -6,13 +6,17 @@
     */
     var gulp = require('gulp-help')(require('gulp'));
     var requireDir = require('require-dir');
-    var runSequence = require('run-sequence');
+    var runSequence = require('run-sequence').use(gulp);
+    var argv = require('yargs').argv;
+
     var $ = {};
+
 
     /**
     * Plugins
     */
     $.taskListing = require('gulp-task-listing');
+    $.util        = require('gulp-util');
 
     /**
     * Get some configuration files
@@ -30,54 +34,35 @@
     */
     gulp.task('default', 'List available tasks & subtasks', $.taskListing.withFilters(null, 'default'));
 
-    /**
-    * Task: 'gulp styles'
-    */
-    gulp.task('styles', 'Copy CSS vendors, Lint & Compile Sass files then watch', function(){
-        runSequence(
-            '_g_process_styles',
-            '_g_watch_styles'
-        );
-    }, {
-        options: {
-            'notify': '└- send desktop notification when task is finished'
-        }
-    });
 
     /**
-    * Task: 'gulp scripts'
-    */
-    gulp.task('scripts', 'Copy JS vendors, Lint & Build JS files then watch', function(){
-        runSequence(
-            '_g_process_scripts',
-            '_g_watch_scripts'
-        );
-    }, {
-        options: {
-            'notify': '└- send desktop notification when task is finished'
-        }
-    });
+     * Task: '_givebackprompt'
+     * End process and give back prompt if sub task does not
+     */
+    gulp.task('_givebackprompt', false, function() { process.exit(0) });
+
 
     /**
-    * Task: 'gulp images'
-    */
-    gulp.task('images', 'Optimize images then watch', function(){
-        runSequence(
-            '_g_process_images'
-        );
-    }, {
-        options: {
-            'notify': '└- send desktop notification when task is finished'
-        }
-    });
+     * Task: '_nowwatching'
+     * Echo watching files
+     */
+    gulp.task('_nowwatching', false, function() { $.util.log('Now watching files for changes…'); });
 
     /**
     * Task: 'gulp all'
     */
     gulp.task('all', 'Process Styles, Scripts and Images simultaneously', function(){
-        runSequence(
-            ['styles', 'scripts', 'images']
-        );
+        if (argv.nowatch) {
+            return runSequence(
+                ['styles', 'scripts', 'images'],
+                '_givebackprompt'
+            );
+        } else {
+            return runSequence(
+                ['styles', 'scripts', 'images'],
+                '_nowwatching'
+            );
+        }
     }, {
         options: {
             'notify': '└- send desktop notification when task is finished'
