@@ -12,7 +12,7 @@ Why "*Guichet*" ? [Because](https://www.legifrance.gouv.fr/affichTexte.do;jsessi
 Just run the following command:
 
 ```bash
-curl -s http://guichet.download/install | bash -s --
+curl -s https://guichet.download/install | bash -s --
 ```
 
 #### :small_blue_diamond: Arguments
