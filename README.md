@@ -27,9 +27,30 @@ You can add the following arguments for advanced setup or options :
 
 ### :wrench: Configure
 
-You have a config file in `gulp/config.js` with default values but you can edit it with your own settings.  
-We advise you to keep all the default values except `projectName`, `styles.vendor.files` and `scripts.vendor.files`.  
-If your browser requirements are differents you can also change `styles.autoprefixers.browsers`.  
+You have a config file in `gulp/config.js` with default values but you can edit it with your own settings.
+We advise you to keep all the default values except `projectName`, `styles.vendor.files` and `scripts.vendor.files`.
+If your browser requirements are differents you can also change `styles.autoprefixers.browsers`.
+
+#### WordPress
+
+In options, there a WordPress option to enable generation of a file each time a css/js is compiled, with a timestamp.
+It allows to include the timestamp of version in the call of the assets on WP.
+
+##### Enable in config
+```js
+'options': {
+    'wordpress': {
+        'active': true, // default: false
+        'fileName': 'assets-version.php',
+        'fileContent': '<?php return \'%timestamp%\'; ?>'
+    }
+},
+```
+
+##### In WordPress
+```php
+wp_enqueue_style('theme-css', get_stylesheet_uri(), array(), include(get_template_directory() . '/assets-version.php'));
+```
 
 ---
 
