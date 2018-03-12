@@ -3,6 +3,13 @@
 
     module.exports = {
         'projectName': 'GUICHET',
+        'options': {
+            'wordpress': {
+                'active': false,
+                'fileName': 'assets-version.php',
+                'fileContent': '<?php return \'%timestamp%\'; ?>'
+            }
+        },
         'styles': {
             'sass': {
                 'src'         : 'sass/**.scss',
@@ -28,7 +35,7 @@
             },
             'vendor': {
                 'files': [
-                    'node_modules/jquery/dist/jquery.js'
+                    // 'node_modules/jquery/dist/jquery.js'
                 ],
                 'dest': 'js/vendor/'
             }
@@ -36,6 +43,11 @@
         'images': {
             'src': 'img/',
             'watch': 'img/src/'
+        },
+        'copy': {
+            'files': {
+                // 'path/to/**/*.svg': 'img/svg/'
+            }
         }
     };
 }());

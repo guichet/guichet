@@ -54,12 +54,12 @@
     gulp.task('all', 'Process Styles, Scripts and Images simultaneously', function(){
         if (argv.nowatch) {
             return runSequence(
-                ['styles', 'scripts', 'images'],
+                ['copyfiles', 'styles', 'scripts', 'images'],
                 '_givebackprompt'
             );
         } else {
             return runSequence(
-                ['styles', 'scripts', 'images'],
+                ['copyfiles', 'styles', 'scripts', 'images'],
                 '_nowwatching'
             );
         }

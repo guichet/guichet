@@ -4,6 +4,7 @@
     /**
     * Basics
     */
+    var fs = require('fs');
     var gulp = require('gulp');
     var requireDir = require('require-dir');
     var runSequence = require('run-sequence').use(gulp);
@@ -94,7 +95,18 @@
                 message : '✅ JS build done',
                 title   : config.projectName + ' (Gulp)',
                 onLast  : true
-            })));
+            })))
+            .on('end', function() {
+                if (config.options.wordpress.active) {
+                    try {
+                        fs.writeFileSync(config.options.wordpress.fileName, config.options.wordpress.fileContent.replace('%timestamp%', new Date().getTime()));
+                    } catch (error) {
+                        // console.error('Error while writing WP Assets file: ' + error);
+                        return false;
+                    }
+                }
+                return true;
+            });
     });
 
     /**

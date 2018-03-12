@@ -1,14 +1,14 @@
 {
   "name": "guichet",
-  "version": "1.0.1",
-  "description": "Frontend starter kit",
+  "version": "1.1",
+  "description": "Frontend starter kit w/ Gulp",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KitaeAgency/guichet.git"
+    "url": "git+https://github.com/guichet/guichet.git"
   },
   "keywords": [
     "guichet",
@@ -44,18 +44,17 @@
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "gulp-wrap-js": "^0.4.1",
+    "merge-stream": "^1.0.1",
     "node-sass": "4.5.3",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.5",
     "yargs": "^4.3.2"
   },
   "author": "Christophe VERGNE",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KitaeAgency/guichet/issues"
+    "url": "https://github.com/guichet/guichet/issues"
   },
-  "homepage": "https://github.com/KitaeAgency/guichet#readme",
-  "dependencies": {
-    "jquery": "^2.2.2"
-  }
+  "homepage": "https://github.com/guichet/guichet#readme",
+  "dependencies": []
 }
