@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [1.1] - 2018-03-12
+## [1.1.1] - 2018-04-03
+### Fixed
+- Fix version number
+
+## [1.1.0] - 2018-03-12
 ### Added
 - A simple `copyfiles` task to copy files from vendor to specific directory for example
 - A WordPress configuration option (in `gulp/config.js`) to generate an Asset file returning the timestamp of last generation
