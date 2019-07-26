@@ -27,6 +27,7 @@
     $.livereload = require('gulp-livereload');
     $.notify     = require('gulp-notify');
     $.util       = require('gulp-util');
+    $.babel      = require('gulp-babel');
 
 
     /**
@@ -86,6 +87,9 @@
             }))
             .pipe($.addsrc.prepend(config.scripts.vendor.dest + '**/*.js'))
             .pipe($.sourcemaps.init())
+            .pipe($.babel({
+                presets: ['@babel/preset-env']
+            }))
             .pipe($.concat(config.scripts.internals.name))
             .pipe($.uglify())
             .pipe($.sourcemaps.write('.'))
